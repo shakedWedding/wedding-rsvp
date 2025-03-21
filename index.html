@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding RSVP</title>
+</head>
+<body>
+    <h2>Wedding Invitation</h2>
+    <p id="greeting"></p>
+
+    <form id="rsvp-form">
+        <label>
+            Will you attend?
+            <input type="radio" name="attendance" value="yes" required> Yes
+            <input type="radio" name="attendance" value="no"> No
+        </label>
+        <br><br>
+        <label id="guests-label" style="display: none;">
+            How many guests? <input type="number" id="guests" name="guests" min="1">
+        </label>
+        <br><br>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        // Get guest name from URL
+        const params = new URLSearchParams(window.location.search);
+        const name = params.get("name");
+        if (name) {
+            document.getElementById("greeting").innerText = `Hello ${name}, will you attend?`;
+        }
+
+        // Show guests input only if "Yes" is selected
+        document.querySelectorAll("input[name='attendance']").forEach(radio => {
+            radio.addEventListener("change", function() {
+                document.getElementById("guests-label").style.display = (this.value === "yes") ? "block" : "none";
+            });
+        });
+
+        // Handle form submission
+        document.getElementById("rsvp-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            alert("RSVP submitted!");  // Replace this with Google Sheets submission
+        });
+    </script>
+</body>
+</html>
